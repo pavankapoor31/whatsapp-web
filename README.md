@@ -1,7 +1,7 @@
 # A WhatsApp web clone using ReactJS
 
 ## Snippets 
-<img width="960" alt="image" src="https://user-images.githubusercontent.com/70996642/222911136-b044f015-daf2-46e0-aaec-ebe5bee20576.png">
+<img width="960" alt="image" src="https://user-images.githubusercontent.com/70996642/222915094-0d2ed2b7-944d-4740-aa40-2bde44facd25.png">
 
 ## Available Scripts
 
