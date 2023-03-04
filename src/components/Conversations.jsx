@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { messagesList } from '../Data';
+import { messagesList, contactList } from '../Data';
 import { SearchContainer, SearchInput } from './Contacts';
 import React, { useState, useEffect } from 'react';
 const Container = styled.div`
@@ -60,12 +60,13 @@ const Message = styled.div`
   font-size: 19px;
 `;
 
-const ConversationComponent = () => {
+const ConversationComponent = (props) => {
+  const { activeUserId, SetActiveUserId } = props;
   const [messages, setMessages] = useState(messagesList);
   const [typedMessage, SetTypedMessage] = useState('');
   const submitHandler = (e) => {
     if (e.keyCode == 13) {
-      if(typedMessage.length===0) return;
+      if (typedMessage.length === 0) return;
       let tempObj = [...messages];
       let obj = {
         id: 0,
@@ -89,12 +90,16 @@ const ConversationComponent = () => {
     return ref;
   }
   const ref = useChatScroll(messages);
-
+  useEffect(
+    ()=>{
+      setMessages(messagesList)
+    },[activeUserId]
+  )
   return (
     <Container>
       <ProfileHeader>
-        <ProfileImage src="/profile/pp4.jpeg" />
-        Anubhav Sharma
+        <ProfileImage src={contactList[activeUserId - 1].profilePic} />
+        {contactList[activeUserId - 1].name}
       </ProfileHeader>
       <MessageContainer ref={ref}>
         {messages.map((messageData) => (
