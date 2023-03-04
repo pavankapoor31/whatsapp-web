@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { messagesList } from '../Data';
 import { SearchContainer, SearchInput } from './Contacts';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ const MessageContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow:auto;
+  overflow: auto;
   background: #e5ddd6;
 `;
 
@@ -65,6 +65,7 @@ const ConversationComponent = () => {
   const [typedMessage, SetTypedMessage] = useState('');
   const submitHandler = (e) => {
     if (e.keyCode == 13) {
+      if(typedMessage.length===0) return;
       let tempObj = [...messages];
       let obj = {
         id: 0,
@@ -78,13 +79,24 @@ const ConversationComponent = () => {
       SetTypedMessage('');
     }
   };
+  function useChatScroll(dep) {
+    const ref = React.useRef();
+    React.useEffect(() => {
+      if (ref.current) {
+        ref.current.scrollTop = ref.current.scrollHeight;
+      }
+    }, [dep]);
+    return ref;
+  }
+  const ref = useChatScroll(messages);
+
   return (
     <Container>
       <ProfileHeader>
         <ProfileImage src="/profile/pp4.jpeg" />
         Anubhav Sharma
       </ProfileHeader>
-      <MessageContainer>
+      <MessageContainer ref={ref}>
         {messages.map((messageData) => (
           <MessageDiv isYours={messageData.senderID === 0}>
             <Message isYours={messageData.senderID === 0}>
