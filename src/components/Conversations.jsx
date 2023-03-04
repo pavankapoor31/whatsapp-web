@@ -62,7 +62,7 @@ const Message = styled.div`
 
 const ConversationComponent = () => {
   const [messages, setMessages] = useState(messagesList);
-  const [typedMessage, SetTypedMessage] = useState(messagesList);
+  const [typedMessage, SetTypedMessage] = useState('');
   const submitHandler = (e) => {
     if (e.keyCode == 13) {
       let tempObj = [...messages];
