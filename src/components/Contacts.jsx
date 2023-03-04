@@ -78,8 +78,14 @@ const ContactInfo = styled.div`
 
 const ContactComponent = (props) => {
   const { userData } = props;
+  console.log(userData.id, props.activeUserId, 'asd');
   return (
-    <ContactItem>
+    <ContactItem
+      style={{
+        background: props.activeUserId === userData.id ? '#dcdada' : 'white',
+      }}
+      onClick={() => props.SetActiveUserId(userData.id)}
+    >
       <ProfileIcon src={userData.profilePic} />
       <ContactInfo>
         <ContactName>{userData.name}</ContactName>
@@ -90,7 +96,7 @@ const ContactComponent = (props) => {
   );
 };
 
-const Contacts = () => {
+const Contacts = (props) => {
   return (
     <Container>
       <ProfileInfoDiv>
@@ -103,7 +109,12 @@ const Contacts = () => {
         </SearchContainer>
       </SearchBox>
       {contactList.map((userData) => (
-        <ContactComponent userData={userData} />
+        <span onClick={() => props.SetActiveUserId(userData.id)}>
+          <ContactComponent
+            userData={userData}
+            activeUserId={props.activeUserId}
+          />
+        </span>
       ))}
     </Container>
   );
